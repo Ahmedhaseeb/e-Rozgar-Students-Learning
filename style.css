@@ -1,0 +1,58 @@
+h1{
+	
+	font-family: calibri, Arial;
+	font-weight: 900;
+	font-style: oblique;
+	text-decoration: italic;
+	color:green;
+	text-align: center;	
+}
+
+
+p{
+	text-align: justify;
+
+}
+
+span{
+}
+img{
+	vertical-align: super;
+}
+	
+#indent{
+	color:red;
+
+}
+.indent{
+	font-size: 35px;
+	text-shadow: 20px 10px 10px magenta;
+	text-indent: 20px;
+	/*text-transform: uppercase;*/
+}
+
+.indent:first-letter{
+	font-size: 50px !important;
+}
+.spacing{
+
+	letter-spacing: 5px;
+	word-spacing: 20px;
+	line-height: 50.20px;
+}
+.spacing:first-line{
+	font-size:50px;
+}
+
+.green{
+	color:green;
+}
+
+.pre{
+
+	white-space: pre;
+
+}
+.span:first-letter{
+	font-size:50px;
+}
