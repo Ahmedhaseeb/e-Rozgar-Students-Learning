@@ -1,3 +1,9 @@
+body{
+	background: rgba(0,0,0,0.1) url("https://www.google.com.pk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png") no-repeat 100px 100px / 700px 700px; 
+
+}
+
+
 h1{
 	
 	font-family: calibri, Arial;
@@ -12,6 +18,16 @@ h1{
 p{
 	text-align: justify;
 
+
+}
+
+p:first-letter{
+	font-size: 50px;
+}
+
+
+p:first-line{
+	font-size: 50px;
 }
 
 span{
@@ -31,18 +47,14 @@ img{
 	/*text-transform: uppercase;*/
 }
 
-.indent:first-letter{
-	font-size: 50px !important;
-}
+
 .spacing{
 
 	letter-spacing: 5px;
 	word-spacing: 20px;
 	line-height: 50.20px;
 }
-.spacing:first-line{
-	font-size:50px;
-}
+
 
 .green{
 	color:green;
@@ -53,6 +65,45 @@ img{
 	white-space: pre;
 
 }
-.span:first-letter{
-	font-size:50px;
+
+
+.link:active{
+	
+	color:green;
+}
+
+.link:hover{
+	font-size:40px;
+	background-color: #ddd;
+}
+
+.link:visited{
+
+}
+
+
+.olist{
+	
+	list-style-type: disc;
+
+}
+
+li{
+	marker-offset: 3em ;
+}
+
+
+
+
+
+table, tr, td{
+	caption-side: top;
+	border-color: red
+	border-size:2px;
+	border-style-left:dotted;
+	border-style-top:solid;
+	border-spacing: 10px;
+	empty-cells: hide;
+	table-layout: fixed;
+
 }
