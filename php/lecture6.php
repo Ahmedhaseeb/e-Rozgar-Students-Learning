@@ -5,10 +5,6 @@
 		<title>PHP - Arrays</title>
 	</head>
 	<body>
-
-
-
-		
 		
 		<?php 
 
