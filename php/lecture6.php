@@ -11,6 +11,30 @@
 		
 		
 		<?php 
+
+
+
+			// implode and explode
+			// 
+			
+			$temp = "78, 60, 62, 68, 71, 68, 73, 85, 66, 64, 76, 63, 75, 76, 73, 68, 62, 73, 72, 65, 74, 62, 62, 65, 64, 68, 73, 75, 79, 73";
+
+
+				$temp = explode(",", $temp);
+				print_r($temp);
+				echo "<br>";
+				print_r(implode("|", $temp));
+				die();
+				$size = sizeof($temp);
+
+				$sum = 0;
+				foreach ($temp as $key => $value) {
+					$sum = $sum + $value;
+				}
+				$avg =  $sum/$size;
+				echo $avg;
+				die();
+
 			//php - list function
 			//
 			//
