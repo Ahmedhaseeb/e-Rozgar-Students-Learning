@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "Raleway-light";
+    font-style: normal;
+    font-weight: 300;
+    src: url("fonts/raleway-light.woff2") format("woff2"),
+    	 url("fonts/raleway-light.eot") format("embedded-opentype");
+}
+@font-face {
+    font-family: "Raleway-Regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/raleway-regular.woff2") format("woff2"),
+    url("fonts/raleway-regular.eot") format("embedded-opentype");
+}
+@font-face {
+    font-family: "Raleway-Medium";
+    font-style: normal;
+    font-weight: 500;
+    src: url("fonts/raleway-medium.woff2") format("woff2"),
+    url("fonts/raleway-medium.eot") format("embedded-opentype");
+}
+@font-face {
+    font-family: "Raleway-SemiBold";
+    font-style: normal;
+    font-weight: 600;
+    src: url("fonts/raleway-semibold.woff2") format("woff2"),
+    url("fonts/raleway-semibold.eot") format("embedded-opentype");
+}
+
+.jumbotron{
+	background-color: #2E2D88;
+	color:#fff;
+}
+
+body{
+	font-family: Raleway-Regular, Arial;
+}
