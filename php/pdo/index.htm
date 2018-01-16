@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html dir="ltr" class="client-js" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>PDO Tutorial for MySQL Developers - Hashphp.org</title>
+<meta name="generator" content="MediaWiki 1.25.3">
+<link rel="shortcut icon" href="http://wiki.hashphp.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://wiki.hashphp.org/opensearch_desc.php" title="Hashphp.org (en)">
+<link rel="EditURI" type="application/rsd+xml" href="http://wiki.hashphp.org/api.php?action=rsd">
+<link rel="alternate" hreflang="x-default" href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers">
+<link rel="alternate" type="application/atom+xml" title="Hashphp.org Atom feed" href="http://wiki.hashphp.org/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="index_files/load.css">
+<style>
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}  .mw-content-ltr .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr .mw-collapsible-toggle{float:right} .mw-content-rtl .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl .mw-collapsible-toggle{float:left}.mw-customtoggle,.mw-collapsible-toggle{cursor:pointer} caption .mw-collapsible-toggle,.mw-content-ltr caption .mw-collapsible-toggle,.mw-content-rtl caption .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr caption .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle,.mw-content-ltr li .mw-collapsible-toggle,.mw-content-rtl li .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr li .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-css:7:e1ffd603cbaaa5f1a36e0d13fe843535 */
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.highlight{font-weight:bold}
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-css:7:f8d0c6895ce3ae14434c16b8fca59432 */
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba(255,255,255,0.5);border-radius:5px;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABblBMVEUAAAD///////9PfTf///80aRdTgjn///9Feij///////////9Rfzf///////////9PfjZRgDh1o1xOfTb///////+bwYqLtnj///////9PfTa82K////9WhT6YxIL///9QgDdTgzr////////j7uDl7eLq8efi693k7OH///////9UhjuBr2rp9uRUhjr///9YljVKgir///9WiTlYjT3////9/v57vFlbkT5PjC9dlD/5/fhuq09stUTs9uhxuElctCpfnT1huDFloEZloUZmpENmvDZpvDxpvTxqvjxrvT5rvT9rwTxsqktswD5uwkBvuUdxw0NztFBztU9ztVBzwkp0tlJ1xkd2t1R3uVR4w1F4xk54x014yE15uVZ5v1R5xVB6v1R7yFJ8wVh9xVl9yFR9yVd9ylN+xVh+yFd/x1l/yFeAylmEx1+Ny2uY0Hqe04Wj1Ymv3Ze33qLD47TJ5L3O6cPU7Mrq9eb2+/Q4j37OAAAAQHRSTlMAAQIEBAUFBQwPFB4fJCUoKiosQEhJS01RUlZZXmdydXaChYuSlJSWmJmoq6uur8LExcvM19fg5ejt8fX2+Pr7SljgewAAAKpJREFUGBkFwQNCAwAAAMDLtl3LtrG4rWXbtvX77gAgZ6grFwC0bhwNVgKgdPZx8b0dgLi+s7Wn0VoAqpfOI9+BNADZI7fLrz2pSEwGHZuH+78lSK8ZLkLezF3ooyUG3VPXq2USei9WngeyoG195yBYWDF3E/2pAhl1e9Gr8bGT+bfOFCC2fnvh4X7rcqIAQNNu+HT6sxkAjceTL/2ZAIhv+PorBwBJxfkA//dFHSCBy/UTAAAAAElFTkSuQmCC);background-image:url(/resources/src/mediawiki.action/images/green-checkmark.png?2015-10-30T17:01:40Z)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:black;text-shadow:0 0.0625em 0 white;text-decoration:none;opacity:0.2;filter:alpha(opacity=20)}.postedit-close:hover{color:black;text-decoration:none;opacity:0.4;filter:alpha(opacity=40)}
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-css:7:e647a7f6e8b0d81dac4257a0f634817f */</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:black;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:white}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-css:7:ae3fa4570b5ac0c6cf7b3776c8ae4d6f */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-css:7:767829777129090ba1f5252c5ce3003c */</style>
+<script src="index_files/load_003.php"></script><script src="index_files/load.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"PDO_Tutorial_for_MySQL_Developers","wgTitle":"PDO Tutorial for MySQL Developers","wgCurRevisionId":641,"wgRevisionId":641,"wgArticleId":194,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"PDO_Tutorial_for_MySQL_Developers","wgRelevantArticleId":194,"wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\"});});
+/* cache key: mediawiki_1057971-mediawiki:resourceloader:filter:minify-js:7:a5c52c063dc436c1ca7c9f456936a5e9 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","skins.vector.js"]);
+}</script><script src="index_files/load_002.php"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/Vector/csshover.min.htc")}</style><![endif]-->
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-PDO_Tutorial_for_MySQL_Developers skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">PDO Tutorial for MySQL Developers</h1>
+						<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Hashphp.org</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="#" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Why_use_PDO.3F"><span class="tocnumber">1</span> <span class="toctext">Why use PDO?</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Connecting_to_MySQL"><span class="tocnumber">2</span> <span class="toctext">Connecting to MySQL</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Error_Handling"><span class="tocnumber">3</span> <span class="toctext">Error Handling</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Running_Simple_Select_Statements"><span class="tocnumber">4</span> <span class="toctext">Running Simple Select Statements</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Fetch_Modes"><span class="tocnumber">4.1</span> <span class="toctext">Fetch Modes</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Getting_Row_Count"><span class="tocnumber">4.2</span> <span class="toctext">Getting Row Count</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Getting_the_Last_Insert_Id"><span class="tocnumber">4.3</span> <span class="toctext">Getting the Last Insert Id</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-8"><a href="#Running_Simple_INSERT.2C_UPDATE.2C_or_DELETE_statements"><span class="tocnumber">5</span> <span class="toctext">Running Simple INSERT, UPDATE, or DELETE statements</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Running_Statements_With_Parameters"><span class="tocnumber">6</span> <span class="toctext">Running Statements With Parameters</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Named_Placeholders"><span class="tocnumber">6.1</span> <span class="toctext">Named Placeholders</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#INSERT.2C_DELETE.2C_UPDATE_Prepared_Queries"><span class="tocnumber">6.2</span> <span class="toctext">INSERT, DELETE, UPDATE Prepared Queries</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Preparing_Statements_using_SQL_functions"><span class="tocnumber">6.3</span> <span class="toctext">Preparing Statements using SQL functions</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Executing_prepared_statements_in_a_loop"><span class="tocnumber">6.4</span> <span class="toctext">Executing prepared statements in a loop</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14"><a href="#Transactions"><span class="tocnumber">7</span> <span class="toctext">Transactions</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#See_Also"><span class="tocnumber">8</span> <span class="toctext">See Also</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#External_links"><span class="tocnumber">9</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id="Why_use_PDO.3F">Why use PDO?</span></h2>
+<p>mysql_* functions are getting old.  For a long time now mysql_* has 
+been at odds with other common SQL database programming interfaces. It 
+doesn't support modern SQL database concepts such as prepared 
+statements, stored procs, transactions etc...  and it's method for 
+escaping parameters with <code>mysql_real_escape_string</code> and 
+concatenating into SQL strings is error prone and old fashioned.  The 
+other issue with mysql_* is that it has had a lack of attention lately 
+from developers, it is not being maintained... which could mean things 
+like security vulnerabilities are not getting fixed, or it may stop 
+working altogether with newer versions of MySQL.  Also lately the PHP 
+community have seen fit to start a soft deprecation of mysql_* which 
+means you will start seeing a slow process of eventually removing 
+mysql_* functions altogether from the language (Don't worry this will 
+probably be awhile before it actually happens!).
+</p><p>PDO has a much nicer interface, you will end up being more 
+productive, and write safer and cleaner code.  PDO also has different 
+drivers for different SQL database vendors which will allow you to 
+easily use other vendors without having to relearn a different 
+interface. (though you will have to learn slightly different SQL 
+probably).  Instead of concatenating escaped strings into SQL, in PDO 
+you bind parameters which is an easier and cleaner way of securing 
+queries.  Binding parameters also allow for a performance increase when 
+calling the same SQL query many times with slightly different 
+parameters.  PDO also has multiple methods of error handling.  The 
+biggest issue I have seen with mysql_* code is that it lacks consistent 
+handling, or no handling at all!  With PDO in exception mode, you can 
+get consistent error handling which will end up saving you loads of time
+ tracking down issues.
+</p><p>PDO is enabled by default in PHP installations now, however you 
+need two extensions to be able to use PDO: PDO, and a driver for the 
+database you want to use like pdo_mysql.  Installing the MySQL driver is
+ as simple as installing the php-mysql package in most distributions.
+</p>
+<h2><span class="mw-headline" id="Connecting_to_MySQL">Connecting to MySQL</span></h2>
+<p>old way:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$link</span> <span class="sy0">=</span> <span class="kw3">mysql_connect</span><span class="br0">(</span><span class="st_h">'localhost'</span><span class="sy0">,</span> <span class="st_h">'user'</span><span class="sy0">,</span> <span class="st_h">'pass'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw3">mysql_select_db</span><span class="br0">(</span><span class="st_h">'testdb'</span><span class="sy0">,</span> <span class="re0">$link</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw3">mysql_set_charset</span><span class="br0">(</span><span class="st_h">'UTF-8'</span><span class="sy0">,</span> <span class="re0">$link</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>new way: all you gotta do is create a new PDO object.  PDO's 
+constructor takes at most 4 parameters, DSN, username, password, and an 
+array of driver options.
+</p><p>A DSN is basically a string of options that tell PDO which driver
+ to use, and the connection details... You can look up all the options 
+here <a rel="nofollow" class="external text" href="http://www.php.net/manual/en/ref.pdo-mysql.connection.php">PDO MYSQL DSN</a>.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$db</span> <span class="sy0">=</span> <span class="kw2">new</span> PDO<span class="br0">(</span><span class="st_h">'mysql:host=localhost;dbname=testdb;charset=utf8mb4'</span><span class="sy0">,</span> <span class="st_h">'username'</span><span class="sy0">,</span> <span class="st_h">'password'</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>Note: If you get an error about character sets, make sure you add the
+ charset parameter to the DSN.  Adding the charset to the DSN is very 
+important for security reasons, most examples you'll see around leave it
+ out.  MAKE SURE TO INCLUDE THE CHARSET!
+</p><p>You can also pass in several driver options as an array to the 
+fourth parameters. I recommend passing the parameter which puts PDO into
+ exception mode, which I will explain in the next section. The other 
+parameter is to turn off prepare emulation which is enabled in MySQL 
+driver by default, but really should be turned off to use PDO safely and
+ is really only usable if you are using an old version of MySQL.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$db</span> <span class="sy0">=</span> <span class="kw2">new</span> PDO<span class="br0">(</span><span class="st_h">'mysql:host=localhost;dbname=testdb;charset=utf8mb4'</span><span class="sy0">,</span> <span class="st_h">'username'</span><span class="sy0">,</span> <span class="st_h">'password'</span><span class="sy0">,</span> <span class="kw3">array</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">ATTR_EMULATE_PREPARES</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="sy0">,</span> 
+                                                                                                PDO<span class="sy0">::</span><span class="me2">ATTR_ERRMODE</span> <span class="sy0">=&gt;</span> PDO<span class="sy0">::</span><span class="me2">ERRMODE_EXCEPTION</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>You can also set some attributes after PDO construction with the <tt>setAttribute</tt> method:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$db</span> <span class="sy0">=</span> <span class="kw2">new</span> PDO<span class="br0">(</span><span class="st_h">'mysql:host=localhost;dbname=testdb;charset=utf8mb4'</span><span class="sy0">,</span> <span class="st_h">'username'</span><span class="sy0">,</span> <span class="st_h">'password'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">ATTR_ERRMODE</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">ERRMODE_EXCEPTION</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">setAttribute</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">ATTR_EMULATE_PREPARES</span><span class="sy0">,</span> <span class="kw4">false</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h2><span class="mw-headline" id="Error_Handling">Error Handling</span></h2>
+<p>Consider your typical mysql_* error handling:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="co1">//connected to mysql</span>
+<span class="re0">$result</span> <span class="sy0">=</span> <span class="kw3">mysql_query</span><span class="br0">(</span><span class="st0">"SELECT * FROM table"</span><span class="sy0">,</span> <span class="re0">$link</span><span class="br0">)</span> or <span class="kw3">die</span><span class="br0">(</span><span class="kw3">mysql_error</span><span class="br0">(</span><span class="re0">$link</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>OR die is a pretty bad way to handle errors, yet this is typical 
+mysql code.  You can't handle die(); as it will just end the script 
+abruptly and then echo the error to the screen which you usually do <b>NOT</b> want to show to your end users allowing nasty hackers discover your schema.
+</p><p>PDO has three error handling modes.  
+</p>
+<ol><li> <i>PDO::ERRMODE_SILENT</i> acts like mysql_* where you must check each result and then look at <code>$db-&gt;errorInfo();</code> to get the error details.</li>
+<li> <i>PDO::ERRMODE_WARNING</i> throws PHP Warnings</li>
+<li> <i>PDO::ERRMODE_EXCEPTION</i> throws PDOException. In my opinion this is the mode you should use.  It acts very much like <code>or die(mysql_error());</code> when it isn't caught, but unlike <code>or die()</code> the PDOException can be caught and handled gracefully if you choose to do so.</li></ol>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+try <span class="br0">{</span>
+    <span class="co1">//connect as appropriate as above</span>
+    <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st_h">'hi'</span><span class="br0">)</span><span class="sy0">;</span> <span class="co1">//invalid query!</span>
+<span class="br0">}</span> catch<span class="br0">(</span>PDOException <span class="re0">$ex</span><span class="br0">)</span> <span class="br0">{</span>
+    <span class="kw1">echo</span> <span class="st0">"An Error occured!"</span><span class="sy0">;</span> <span class="co1">//user friendly message</span>
+    some_logging_function<span class="br0">(</span><span class="re0">$ex</span><span class="sy0">-&gt;</span><span class="me1">getMessage</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p><b>NOTE:</b> you do not have to handle with try catch right away. You
+ can catch it anytime that is appropriate. It may make more sense to 
+catch it at a higher level like outside of the function that calls the 
+PDO stuff:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="kw2">function</span> getData<span class="br0">(</span><span class="re0">$db</span><span class="br0">)</span> <span class="br0">{</span>
+   <span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st0">"SELECT * FROM table"</span><span class="br0">)</span><span class="sy0">;</span>
+   <span class="kw1">return</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="co1">//then much later</span>
+try <span class="br0">{</span>
+   getData<span class="br0">(</span><span class="re0">$db</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span> catch<span class="br0">(</span>PDOException <span class="re0">$ex</span><span class="br0">)</span> <span class="br0">{</span>
+   <span class="co1">//handle me.</span>
+<span class="br0">}</span></pre></div></div>
+<p>or you may not want to handle the exception with try/catch at all, 
+and have it work much like or die(); does.  You can hide the dangerous 
+error messages in production by turning display_errors off and just 
+reading your error log.
+</p>
+<h2><span class="mw-headline" id="Running_Simple_Select_Statements">Running Simple Select Statements</span></h2>
+<p>Consider the mysql_* code:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$result</span> <span class="sy0">=</span> <span class="kw3">mysql_query</span><span class="br0">(</span><span class="st_h">'SELECT * from table'</span><span class="br0">)</span> or <span class="kw3">die</span><span class="br0">(</span><span class="kw3">mysql_error</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$num_rows</span> <span class="sy0">=</span> <span class="kw3">mysql_num_rows</span><span class="br0">(</span><span class="re0">$result</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">while</span><span class="br0">(</span><span class="re0">$row</span> <span class="sy0">=</span> <span class="kw3">mysql_fetch_assoc</span><span class="br0">(</span><span class="re0">$result</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+   <span class="kw1">echo</span> <span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field1'</span><span class="br0">]</span><span class="sy0">.</span><span class="st_h">' '</span><span class="sy0">.</span><span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field2'</span><span class="br0">]</span><span class="sy0">;</span> <span class="co1">//etc...</span>
+<span class="br0">}</span></pre></div></div>
+<p>In PDO You can run such queries like this:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="kw1">foreach</span><span class="br0">(</span><span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st_h">'SELECT * FROM table'</span><span class="br0">)</span> <span class="kw1">as</span> <span class="re0">$row</span><span class="br0">)</span> <span class="br0">{</span>
+    <span class="kw1">echo</span> <span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field1'</span><span class="br0">]</span><span class="sy0">.</span><span class="st_h">' '</span><span class="sy0">.</span><span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field2'</span><span class="br0">]</span><span class="sy0">;</span> <span class="co1">//etc...</span>
+<span class="br0">}</span></pre></div></div>
+<p><code>query()</code> method returns a <code>PDOStatement</code> object.  You can also fetch results this way:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st_h">'SELECT * FROM table'</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">while</span><span class="br0">(</span><span class="re0">$row</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetch</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+    <span class="kw1">echo</span> <span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field1'</span><span class="br0">]</span><span class="sy0">.</span><span class="st_h">' '</span><span class="sy0">.</span><span class="re0">$row</span><span class="br0">[</span><span class="st_h">'field2'</span><span class="br0">]</span><span class="sy0">;</span> <span class="co1">//etc...</span>
+<span class="br0">}</span></pre></div></div>
+<p>or
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st_h">'SELECT * FROM table'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$results</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="co1">//use $results</span></pre></div></div>
+<h3><span class="mw-headline" id="Fetch_Modes">Fetch Modes</span></h3>
+<p>Note the use of <code>PDO::FETCH_ASSOC</code> in the <code>fetch()</code> and <code>fetchAll()</code> code above. This tells PDO to return the rows as an associative array with the field names as keys. Other fetch modes like <code>PDO::FETCH_NUM</code>
+ returns the row as a numerical array. The default is to fetch with 
+PDO::FETCH_BOTH which duplicates the data with both numerical and 
+associative keys. It's recommended you specify one or the other so you 
+don't have arrays that are double the size! PDO can also fetch objects 
+with <code>PDO::FETCH_OBJ</code>, and can take existing classes with <code>PDO::FETCH_CLASS</code>.  It can also bind into specific variables with <code>PDO::FETCH_BOUND</code> and using <code>bindColumn</code> method. There are even more choices! Read about them all here: <a rel="nofollow" class="external text" href="http://www.php.net/manual/en/pdostatement.fetch.php">PDOStatement Fetch documentation</a>.
+</p><p><br>
+</p>
+<h3><span class="mw-headline" id="Getting_Row_Count">Getting Row Count</span></h3>
+<p>Instead of using mysql_num_rows to get the number of returned rows you can get a <code>PDOStatement</code> and do rowCount();
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">(</span><span class="st_h">'SELECT * FROM table'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$row_count</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">rowCount</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$row_count</span><span class="sy0">.</span><span class="st_h">' rows selected'</span><span class="sy0">;</span></pre></div></div>
+<p><b>NOTE:</b> Though the documentation says this method is only for returning affected rows from <code>UPDATE</code>, <code>INSERT</code>, <code>DELETE</code> queries, with the PDO_MYSQL driver (and this driver only) you can get the row count for <code>SELECT</code> queries.  Keep this in mind when writing code for multiple databases.
+</p><p>This is because MySQL's protocol is one of the very few that give this information to the client for <code>SELECT</code>
+ statements. Most other database vendors don't bother divulging this 
+information to the client as it would incur more overhead in their 
+implementations.
+</p>
+<h3><span class="mw-headline" id="Getting_the_Last_Insert_Id">Getting the Last Insert Id</span></h3>
+<p>Previously in mysql_* you did something like this.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$result</span> <span class="sy0">=</span> <span class="kw3">mysql_query</span><span class="br0">(</span><span class="st0">"INSERT INTO table(firstname, lastname) VALUES('John', 'Doe')"</span><span class="br0">)</span> or <span class="kw3">die</span><span class="br0">(</span><span class="st0">"Insert Failed "</span><span class="sy0">.</span><span class="kw3">mysql_error</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$insert_id</span> <span class="sy0">=</span> <span class="kw3">mysql_insert_id</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>With PDO you just do run the lastInsertId method.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$result</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="kw3">exec</span><span class="br0">(</span><span class="st0">"INSERT INTO table(firstname, lastname) VAULES('John', 'Doe')"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$insertId</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">lastInsertId</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h2><span class="mw-headline" id="Running_Simple_INSERT.2C_UPDATE.2C_or_DELETE_statements">Running Simple INSERT, UPDATE, or DELETE statements</span></h2>
+<p>Consider the mysql_* code.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$results</span> <span class="sy0">=</span> <span class="kw3">mysql_query</span><span class="br0">(</span><span class="st0">"UPDATE table SET field='value'"</span><span class="br0">)</span> or <span class="kw3">die</span><span class="br0">(</span><span class="kw3">mysql_error</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$affected_rows</span> <span class="sy0">=</span> <span class="kw3">mysql_affected_rows</span><span class="br0">(</span><span class="re0">$result</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$affected_rows</span><span class="sy0">.</span><span class="st_h">' were affected'</span><span class="sy0">;</span></pre></div></div>
+<p>for PDO this would look like:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$affected_rows</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="kw3">exec</span><span class="br0">(</span><span class="st0">"UPDATE table SET field='value'"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw1">echo</span> <span class="re0">$affected_rows</span><span class="sy0">.</span><span class="st_h">' were affected'</span></pre></div></div>
+<p>Do the same for simple <code>DELETE</code>, and <code>INSERT statements as well</code>
+</p>
+<h2><span class="mw-headline" id="Running_Statements_With_Parameters">Running Statements With Parameters</span></h2>
+<p>So far we've only shown simple statements that don't take in any 
+variables.  These are simple statements and PDO has the shortcut methods
+ <code>query</code> for <code>SELECT</code> statements and <code>exec</code> for <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>
+ statements.  For statements that take in variable parameters, you 
+should use bound parameter methods to execute your queries safely.  
+Consider the following mysql_* code.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$results</span> <span class="sy0">=</span> <span class="kw3">mysql_query</span><span class="br0">(</span><span class="kw3">sprintf</span><span class="br0">(</span><span class="st0">"SELECT * FROM table WHERE id='<span class="es6">%s</span>' AND name='<span class="es6">%s</span>'"</span><span class="sy0">,</span> 
+                       <span class="kw3">mysql_real_escape_string</span><span class="br0">(</span><span class="re0">$id</span><span class="br0">)</span><span class="sy0">,</span> <span class="kw3">mysql_real_escape_string</span><span class="br0">(</span><span class="re0">$name</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span> or <span class="kw3">die</span><span class="br0">(</span><span class="kw3">mysql_error</span><span class="br0">(</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$rows</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw1">while</span><span class="br0">(</span><span class="re0">$row</span> <span class="sy0">=</span> <span class="kw3">mysql_fetch_assoc</span><span class="br0">(</span><span class="re0">$results</span><span class="br0">)</span><span class="br0">)</span><span class="br0">{</span>
+    <span class="re0">$rows</span><span class="br0">[</span><span class="br0">]</span> <span class="sy0">=</span> <span class="re0">$row</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>Man! that's a pain, especially if you have lots of parameters. This is how you can do it in PDO:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT * FROM table WHERE id=? AND name=?"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$id</span><span class="sy0">,</span> <span class="re0">$name</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>So what's going on here?  The <code>prepare</code> method sends the query to the server, and it's compiled with the '?' placeholders to be used as expected arguments.  The <code>execute</code>
+ method sends the arguments to the server and runs the compiled 
+statement.  Since the query and the dynamic parameters are sent 
+separately, there is no way that any SQL that is in those parameters can
+ be executed... so NO SQL INJECTION can occur!  This is a much better 
+and safer solution than concatenating strings together.
+</p><p><b>NOTE</b>: when you bind parameters, do NOT put quotes around 
+the placeholders. It will cause strange SQL syntax errors, and quotes 
+aren't needed as the type of the parameters are sent during <code>execute</code> so they are not needed to be known at the time of <code>prepare</code>.
+</p><p>There's a few other ways you can bind parameters as well.  
+Instead of passing them as an array, which binds each parameter as a 
+String type, you can use <code>bindValue</code> and specify the type for each parameter:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT * FROM table WHERE id=? AND name=?"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="nu0">1</span><span class="sy0">,</span> <span class="re0">$id</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_INT</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="nu0">2</span><span class="sy0">,</span> <span class="re0">$name</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h3><span class="mw-headline" id="Named_Placeholders">Named Placeholders</span></h3>
+<p>Now if you have lots of parameters to bind, doesn't all those '?' 
+characters make you dizzy and are hard to count?  Well, in PDO you can 
+use <i>named placeholders</i> instead of the '?':
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT * FROM table WHERE id=:id AND name=:name"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="st_h">':id'</span><span class="sy0">,</span> <span class="re0">$id</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_INT</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="st_h">':name'</span><span class="sy0">,</span> <span class="re0">$name</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>You can bind using <code>execute</code> with an array as well:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT * FROM table WHERE id=:id AND name=:name"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="st_h">':name'</span> <span class="sy0">=&gt;</span> <span class="re0">$name</span><span class="sy0">,</span> <span class="st_h">':id'</span> <span class="sy0">=&gt;</span> <span class="re0">$id</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">fetchAll</span><span class="br0">(</span>PDO<span class="sy0">::</span><span class="me2">FETCH_ASSOC</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h3><span class="mw-headline" id="INSERT.2C_DELETE.2C_UPDATE_Prepared_Queries">INSERT, DELETE, UPDATE Prepared Queries</span></h3>
+<p>Prepared Statements for <code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> are not different than <code>SELECT</code>. But lets do some examples anyway:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"INSERT INTO table(field1,field2,field3,field4,field5) VALUES(:field1,:field2,:field3,:field4,:field5)"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="st_h">':field1'</span> <span class="sy0">=&gt;</span> <span class="re0">$field1</span><span class="sy0">,</span> <span class="st_h">':field2'</span> <span class="sy0">=&gt;</span> <span class="re0">$field2</span><span class="sy0">,</span> <span class="st_h">':field3'</span> <span class="sy0">=&gt;</span> <span class="re0">$field3</span><span class="sy0">,</span> <span class="st_h">':field4'</span> <span class="sy0">=&gt;</span> <span class="re0">$field4</span><span class="sy0">,</span> <span class="st_h">':field5'</span> <span class="sy0">=&gt;</span> <span class="re0">$field5</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$affected_rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">rowCount</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"DELETE FROM table WHERE id=:id"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="st_h">':id'</span><span class="sy0">,</span> <span class="re0">$id</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$affected_rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">rowCount</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"UPDATE table SET name=? WHERE id=?"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$name</span><span class="sy0">,</span> <span class="re0">$id</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$affected_rows</span> <span class="sy0">=</span> <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">rowCount</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h3><span class="mw-headline" id="Preparing_Statements_using_SQL_functions">Preparing Statements using SQL functions</span></h3>
+<p>You may ask how do you use SQL functions with prepared statements.  
+I've seen people try to bind functions into placeholders like so:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="co1">//THIS WILL NOT WORK!</span>
+<span class="re0">$time</span> <span class="sy0">=</span> <span class="st_h">'NOW()'</span><span class="sy0">;</span>
+<span class="re0">$name</span> <span class="sy0">=</span> <span class="st_h">'BOB'</span><span class="sy0">;</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"INSERT INTO table(`time`, `name`) VALUES(?,&nbsp;?)"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$time</span><span class="sy0">,</span> <span class="re0">$name</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>This does not work, you need to put the function in the query as normal:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$name</span> <span class="sy0">=</span> <span class="st_h">'BOB'</span><span class="sy0">;</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"INSERT INTO table(`time`, `name`) VALUES(NOW(),&nbsp;?)"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$name</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>You can bind arguments into SQL functions however:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$name</span> <span class="sy0">=</span> <span class="st_h">'BOB'</span><span class="sy0">;</span>
+<span class="re0">$password</span> <span class="sy0">=</span> <span class="st_h">'badpass'</span><span class="sy0">;</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"INSERT INTO table(`hexvalue`, `password`) VALUES(HEX(?), PASSWORD(?))"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$name</span><span class="sy0">,</span> <span class="re0">$password</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>Also note that this does NOT work for LIKE statements:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="co1">//THIS DOES NOT WORK</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT field FROM table WHERE field LIKE&nbsp;%?%"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindParam</span><span class="br0">(</span><span class="nu0">1</span><span class="sy0">,</span> <span class="re0">$search</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>So do this instead:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SELECT field FROM table WHERE field LIKE&nbsp;?"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindValue</span><span class="br0">(</span><span class="nu0">1</span><span class="sy0">,</span> <span class="st0">"%<span class="es4">$search</span>%"</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>Note we used <b>bindValue</b> and not <b>bindParam</b>. Trying to bind a parameter by reference will generate a Fatal Error and this cannot be caught by PDOException either.
+</p>
+<h3><span class="mw-headline" id="Executing_prepared_statements_in_a_loop">Executing prepared statements in a loop</span></h3>
+<p>Prepared statements excel in being called multiple times in a row 
+with different values.  Because the sql statement gets compiled first, 
+it can be called multiple times in a row with different arguments, and 
+you'll get a big speed increase vs calling mysql_query over and over 
+again!
+</p><p>Typically this is done by binding parameters with <code>bindParam</code>. <code>bindParam</code> is much like <code>bindValue</code>
+ except instead of binding the value of a variable, it binds the 
+variable itself, so that if the variable changes, it will be read at the
+ time of <code>execute</code>.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+<span class="re0">$values</span> <span class="sy0">=</span> <span class="kw3">array</span><span class="br0">(</span><span class="st_h">'bob'</span><span class="sy0">,</span> <span class="st_h">'alice'</span><span class="sy0">,</span> <span class="st_h">'lisa'</span><span class="sy0">,</span> <span class="st_h">'john'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$name</span> <span class="sy0">=</span> <span class="st_h">''</span><span class="sy0">;</span>
+<span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"INSERT INTO table(`name`) VALUES(:name)"</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">bindParam</span><span class="br0">(</span><span class="st_h">':name'</span><span class="sy0">,</span> <span class="re0">$name</span><span class="sy0">,</span> PDO<span class="sy0">::</span><span class="me2">PARAM_STR</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="kw1">foreach</span><span class="br0">(</span><span class="re0">$values</span> <span class="kw1">as</span> <span class="re0">$name</span><span class="br0">)</span> <span class="br0">{</span>
+   <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<h2><span class="mw-headline" id="Transactions">Transactions</span></h2>
+<p>Here's an example of using transactions in PDO: (note that calling <code>beginTransaction()</code> turns off auto commit automatically):
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="php source-php"><pre class="de1"><span class="kw2">&lt;?php</span>
+try <span class="br0">{</span>
+    <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">beginTransaction</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="kw3">exec</span><span class="br0">(</span><span class="st0">"SOME QUERY"</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"SOME OTHER QUERY?"</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$value</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$stmt</span> <span class="sy0">=</span> <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">prepare</span><span class="br0">(</span><span class="st0">"YET ANOTHER QUERY??"</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="re0">$stmt</span><span class="sy0">-&gt;</span><span class="me1">execute</span><span class="br0">(</span><span class="kw3">array</span><span class="br0">(</span><span class="re0">$value2</span><span class="sy0">,</span> <span class="re0">$value3</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+    <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">commit</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span> catch<span class="br0">(</span>PDOException <span class="re0">$ex</span><span class="br0">)</span> <span class="br0">{</span>
+    <span class="co1">//Something went wrong rollback!</span>
+    <span class="re0">$db</span><span class="sy0">-&gt;</span><span class="me1">rollBack</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw1">echo</span> <span class="re0">$ex</span><span class="sy0">-&gt;</span><span class="me1">getMessage</span><span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<h2><span class="mw-headline" id="See_Also">See Also</span></h2>
+<p><a href="http://wiki.hashphp.org/Validation" title="Validation">Validation and SQL Injection</a>
+</p>
+<h2><span class="mw-headline" id="External_links">External links</span></h2>
+<p><a rel="nofollow" class="external text" href="http://www.php.net/manual/en/book.pdo.php">PDO Documentation</a>
+</p>
+<!-- 
+NewPP limit report
+CPU time usage: 1.898 seconds
+Real time usage: 1.957 seconds
+Preprocessor visited node count: 341/1000000
+Preprocessor generated node count: 688/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%    0.000      1 - -total
+-->
+
+<!-- Saved in parser cache with key mediawiki_1057971-mediawiki:pcache:idhash:194-0!*!0!!en!*!* and timestamp 20160227164305 and revision id 641
+ -->
+</div>									<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;oldid=641">http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;oldid=641</a>"					</div>
+													<div id="catlinks" class="catlinks catlinks-allhidden"></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-login"><a href="http://wiki.hashphp.org/index.php?title=Special:UserLogin&amp;returnto=PDO+Tutorial+for+MySQL+Developers" title="You are encouraged to log in; however, it is not mandatory [Alt+Shift+o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li id="ca-nstab-main" class="selected"><span><a href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers" title="View the content page [Alt+Shift+c]" accesskey="c">Page</a></span></li>
+															<li id="ca-talk"><span><a href="http://wiki.hashphp.org/Talk:PDO_Tutorial_for_MySQL_Developers" title="Discussion about the content page [Alt+Shift+t]" accesskey="t">Discussion</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 tabindex="0" id="p-variants-label"><span>Variants</span><a tabindex="-1" href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers">Read</a></span></li>
+															<li id="ca-viewsource"><span><a href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;action=edit" title="This page is protected.
+You can view its source [Alt+Shift+e]" accesskey="e">View source</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;action=history" title="Past revisions of this page [Alt+Shift+h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div style="" id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 tabindex="0" id="p-cactions-label"><span>More</span><a tabindex="-1" href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/index.php" id="searchform">
+														<div id="simpleSearch">
+															<input autocomplete="off" tabindex="1" name="search" placeholder="Search" title="Search Hashphp.org [Alt+Shift+f]" accesskey="f" id="searchInput" type="search"><input value="Special:Search" name="title" type="hidden"><input name="go" value="Go" title="Go to a page with this exact name if exists" id="searchButton" class="searchButton" type="submit">								</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="http://wiki.hashphp.org/Main_Page" title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id="p-navigation" aria-labelledby="p-navigation-label">
+			<h3 id="p-navigation-label">Navigation</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-mainpage-description"><a href="http://wiki.hashphp.org/Main_Page" title="Visit the main page [Alt+Shift+z]" accesskey="z">Main page</a></li>
+													<li id="n-recentchanges"><a href="http://wiki.hashphp.org/Special:RecentChanges" title="A list of recent changes in the wiki [Alt+Shift+r]" accesskey="r">Recent changes</a></li>
+													<li id="n-randompage"><a href="http://wiki.hashphp.org/Special:Random" title="Load a random page [Alt+Shift+x]" accesskey="x">Random page</a></li>
+													<li id="n-help"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="The place to find out">Help</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-tb" aria-labelledby="p-tb-label">
+			<h3 id="p-tb-label">Tools</h3>
+
+			<div class="body">
+									<ul>
+													<li id="t-whatlinkshere"><a href="http://wiki.hashphp.org/Special:WhatLinksHere/PDO_Tutorial_for_MySQL_Developers" title="A list of all wiki pages that link here [Alt+Shift+j]" accesskey="j">What links here</a></li>
+													<li id="t-recentchangeslinked"><a href="http://wiki.hashphp.org/Special:RecentChangesLinked/PDO_Tutorial_for_MySQL_Developers" title="Recent changes in pages linked from this page [Alt+Shift+k]" accesskey="k">Related changes</a></li>
+													<li id="t-specialpages"><a href="http://wiki.hashphp.org/Special:SpecialPages" title="A list of all special pages [Alt+Shift+q]" accesskey="q">Special pages</a></li>
+													<li id="t-print"><a href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;printable=yes" rel="alternate" title="Printable version of this page [Alt+Shift+p]" accesskey="p">Printable version</a></li>
+													<li id="t-permalink"><a href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;oldid=641" title="Permanent link to this revision of the page">Permanent link</a></li>
+													<li id="t-info"><a href="http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&amp;action=info" title="More information about this page">Page information</a></li>
+											</ul>
+							</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 17 February 2016, at 08:33.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="http://wiki.hashphp.org/Hashphp.org:Privacy_policy" title="Hashphp.org:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="http://wiki.hashphp.org/Hashphp.org:About" title="Hashphp.org:About">About Hashphp.org</a></li>
+											<li id="footer-places-disclaimer"><a href="http://wiki.hashphp.org/Hashphp.org:General_disclaimer" title="Hashphp.org:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-poweredbyico">
+															<a href="http://www.mediawiki.org/"><img src="index_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/resources/assets/poweredby_mediawiki_132x47.png 1.5x, /resources/assets/poweredby_mediawiki_176x62.png 2x" height="31" width="88"></a>
+													</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>if(window.jQuery)jQuery.ready();</script><script>if(window.mw){
+mw.loader.state({"site":"ready","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.toc","mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest"],null,true);
+}</script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":407});
+}</script>
+	
+
+<div class="suggestions" style="display: none; font-size: 13px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body></html>
